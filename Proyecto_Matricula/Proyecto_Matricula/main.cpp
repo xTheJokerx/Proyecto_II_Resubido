@@ -44,7 +44,7 @@ int main() {
 				cin >> ce;
 				cout << "Telefono: " << endl;
 				cin >> te;
-				instituto->getContEstudiantes()->IngresaNUEVOEstudiante(no, ce, te);
+				instituto->getContEstudiantes()->IngresaEstudianteConDatos(no, ce, te);
 				system("pause");
 				break;
 			case 2:

@@ -19,24 +19,22 @@ NodoEstudiante* ContenedorLEstudiante::getPpioEstudiante() { return ppioEstu; }
 
 void ContenedorLEstudiante::setPpioEstudiante(NodoEstudiante* es) { ppioEstu = es; }
 
-
-void ContenedorLEstudiante::IngresaEstudiante(Estudiante* estu) {
+void ContenedorLEstudiante::IngresaEstudiante(Estudiante* est) {
 	if (ppioEstu == NULL)
-		ppioEstu = new NodoEstudiante(estu, ppioEstu);
+		ppioEstu = new NodoEstudiante(est, ppioEstu);
 
 	else {
-		NodoEstudiante* pex = ppioEstu;
-		NodoEstudiante* aux = NULL;
-		while (pex != NULL) {
-			aux = pex;
+		NodoEstudiante* pex;
+		pex = ppioEstu;
+		while (pex->getSiguienteEstudiante() != NULL)
 			pex = pex->getSiguienteEstudiante();
-		}
-		NodoEstudiante* nuevo = new NodoEstudiante(estu, NULL);
-		aux->setSiguienteEstudiante(nuevo);
+		NodoEstudiante* nuevo = new NodoEstudiante(est, NULL);
+		pex->setSiguienteEstudiante(nuevo);
 	}
+
 }
 
-void ContenedorLEstudiante::IngresaNUEVOEstudiante(string no, string ce, string te) {
+void ContenedorLEstudiante::IngresaEstudianteConDatos(string no, string ce, string te) {
 	if (ppioEstu == NULL) {
 		Estudiante* estu = new Estudiante(no, ce, te);
 		ppioEstu = new NodoEstudiante(estu, ppioEstu);
@@ -66,48 +64,8 @@ string ContenedorLEstudiante::toString() {
 	return p.str();
 }
 
-void ContenedorLEstudiante::EliminaEstudiante(Estudiante* estu) {
-	NodoEstudiante* pex = ppioEstu;
-	while (pex != NULL) {
-		if (pex->getEstudiante() == estu) {
-			NodoEstudiante* borrador = pex->getSiguienteEstudiante();
-			pex->setSiguienteEstudiante(borrador->getSiguienteEstudiante());
-			delete borrador;
-		}
-		else
-			pex = pex->getSiguienteEstudiante();
-	}
-}
 
-void ContenedorLEstudiante::EliminaEstudiantePorCedula(string cedu) {
-	//Preguntar si ppioEstu esta viendo algo diferente de NULL
-	if (ppioEstu != NULL) {
-		NodoEstudiante* aux_borrar = ppioEstu;
-		NodoEstudiante* anterior = NULL;
-		
-		//Ahora se necesita recorrer la lista...
-		while ((aux_borrar != NULL) && (aux_borrar->getEstudiante()->getCedula() != cedu)) {
-			anterior = aux_borrar;
-			aux_borrar = aux_borrar->getSiguienteEstudiante();
-		}
 
-		//Caso I: No se encontró un estudiante con dicha cédula...
-		if (aux_borrar == NULL)
-			cout << "Estudiante no encontrado" << endl;
-		
-		//Caso II: El primer estudiante de la lista tiene dicha cédula...
-		else if (anterior == NULL) {
-			ppioEstu = ppioEstu->getSiguienteEstudiante();
-			delete aux_borrar;
-		}
-		
-		//Caso III: El estudiante se encuentra en alguna otra posicion de la lista...
-		else {
-			anterior->setSiguienteEstudiante(aux_borrar->getSiguienteEstudiante());
-			delete aux_borrar;
-		}
-	}
-}
 
 string ContenedorLEstudiante::muestraUnEstudiantePorCedula(string ce) {
 	stringstream s;
@@ -124,8 +82,35 @@ string ContenedorLEstudiante::muestraUnEstudiantePorCedula(string ce) {
 	return s.str();
 }
 
+void ContenedorLEstudiante::EliminaEstudiantePorCedula(string cedu) {
+	//Preguntar si ppioEstu esta viendo algo diferente de NULL
+	if (ppioEstu != NULL) {
+		NodoEstudiante* aux_borrar = ppioEstu;
+		NodoEstudiante* anterior = NULL;
 
+		//Ahora se necesita recorrer la lista...
+		while ((aux_borrar != NULL) && (aux_borrar->getEstudiante()->getCedula() != cedu)) {
+			anterior = aux_borrar;
+			aux_borrar = aux_borrar->getSiguienteEstudiante();
+		}
 
+		//Caso I: No se encontró un estudiante con dicha cédula...
+		if (aux_borrar == NULL)
+			cout << "Estudiante no encontrado" << endl;
+
+		//Caso II: El primer estudiante de la lista tiene dicha cédula...
+		else if (anterior == NULL) {
+			ppioEstu = ppioEstu->getSiguienteEstudiante();
+			delete aux_borrar;
+		}
+
+		//Caso III: El estudiante se encuentra en alguna otra posicion de la lista...
+		else {
+			anterior->setSiguienteEstudiante(aux_borrar->getSiguienteEstudiante());
+			delete aux_borrar;
+		}
+	}
+}
 
 
 void ContenedorLEstudiante::saveAll(ofstream& file) {
@@ -158,4 +143,3 @@ void ContenedorLEstudiante::readAll(ifstream& file) {
 	}
 
 }
-

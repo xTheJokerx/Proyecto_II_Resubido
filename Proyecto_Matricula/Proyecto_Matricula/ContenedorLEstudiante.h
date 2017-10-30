@@ -7,14 +7,13 @@ private:
 public:
 	ContenedorLEstudiante();
 	~ContenedorLEstudiante();
+	
 	NodoEstudiante* getPpioEstudiante();
 	void setPpioEstudiante(NodoEstudiante*);
-
-	void IngresaEstudiante(Estudiante*);
-	string toString();
-	void EliminaEstudiante(Estudiante*);
 	
-	void IngresaNUEVOEstudiante(string no, string ce, string te);
+	void IngresaEstudiante(Estudiante*);
+	void IngresaEstudianteConDatos(string no, string ce, string te);
+	string toString();
 	string muestraUnEstudiantePorCedula(string ce);
 	void EliminaEstudiantePorCedula(string cedu);
 
