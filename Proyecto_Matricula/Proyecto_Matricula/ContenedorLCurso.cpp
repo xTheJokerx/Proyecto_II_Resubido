@@ -33,32 +33,7 @@ void ContenedorLCurso::IngresaCurso(Curso* curso){
 	}
 }
 
-string ContenedorLCurso::toString(){
-	stringstream p;
-	NodoCurso* pEx = ppioCurso;
-	p << "------ LISTA DE CURSOS -------" << endl;
-	while (pEx != NULL) {
-		p << pEx->getCurso()->toString() << endl;
-		pEx = pEx->getSiguienteCurso();
-	}
-	return p.str();
-}
-
-void ContenedorLCurso::EliminaCurso(Curso* curso){
-	NodoCurso* pex = ppioCurso;
-	while (pex != NULL) {
-		if (pex->getCurso() == curso) {
-			NodoCurso* borrador = pex->getSiguienteCurso();
-			pex->setSiguienteCurso(borrador->getSiguienteCurso());
-			delete borrador;
-		}
-		else
-			pex = pex->getSiguienteCurso();
-	}
-
-}
-
-void ContenedorLCurso::IngresaNUEVOCurso(string name, string code){
+void ContenedorLCurso::IngresaCursoConDatos(string name, string code) {
 	if (ppioCurso == NULL) {
 		Curso* curso = new Curso(name, code);
 		ppioCurso = new NodoCurso(curso, ppioCurso);
@@ -76,6 +51,17 @@ void ContenedorLCurso::IngresaNUEVOCurso(string name, string code){
 		aux->setSiguienteCurso(nuevo);
 	}
 
+}
+
+string ContenedorLCurso::toString(){
+	stringstream p;
+	NodoCurso* pEx = ppioCurso;
+	p << "------ LISTA DE CURSOS -------" << endl;
+	while (pEx != NULL) {
+		p << pEx->getCurso()->toString() << endl;
+		pEx = pEx->getSiguienteCurso();
+	}
+	return p.str();
 }
 
 string ContenedorLCurso::muestraUnCursoPorCodigo(string code){

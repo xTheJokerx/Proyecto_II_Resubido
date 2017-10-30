@@ -6,6 +6,7 @@ Grupo::Grupo() {
 	aula = "";
 	profesor = NULL;
 	horario = NULL;
+	curso = NULL;
 }
 
 Grupo::Grupo(string NRC, int cupo, string aula) {
@@ -14,17 +15,19 @@ Grupo::Grupo(string NRC, int cupo, string aula) {
 	this->aula = aula;
 }
 
-Grupo::Grupo(string NRC, int cupo, string aula, Profesor* prof, Horario* horar) {
+Grupo::Grupo(string NRC, int cupo, string aula, Profesor* profesor, Horario* horario, Curso* curso) {
 	this->NRC = NRC;
 	this->cupo = cupo;
 	this->aula = aula;
-	profesor = prof;
-	horario = horar;
+	this->profesor = profesor;
+	this->horario = horario;
+	this->curso = curso;
 }
 
 Grupo::~Grupo() {
 	delete profesor;
 	delete horario;
+	delete curso;
 }
 
 string Grupo::getNRC() { return NRC; }
@@ -60,7 +63,8 @@ void Grupo::save(ofstream& archivo) {//duda aqui
 		<< getProfesor()->getCedula() << endl
 		<< getProfesor()->getTelefono() << endl
 		<< getHorario()->getFecha()->getDia() << endl
-		<< getHorario()->getTiempo()->toString() << endl;
+		<< getHorario()->getTiempo()->getHora() << endl
+		<< getHorario()->getTiempo()->getMinuto() << endl;
 }
 
 void Grupo::read(ifstream& archivo) { //duda aqui igual 
@@ -70,7 +74,11 @@ void Grupo::read(ifstream& archivo) { //duda aqui igual
 		>> getProfesor()->getNombre()
 		>> getProfesor()->getCedula()
 		>> getProfesor()->getTelefono()
-		>> getHorario()->toString();
+		>> getHorario()->getFecha()->getDia()
+		//>> getHorario()->getTiempo()->getHora()
+		//>> getHorario()->getTiempo()->getMinuto()
+		>> getCurso()->getNombreCurso()
+		>> getCurso()->getCodigo();
 }
 
 string Grupo::toString() {
@@ -80,12 +88,13 @@ string Grupo::toString() {
 	s << "Cupo: " << getCupo() << endl;
 	s << "Aula: " << getAula() << endl;
 	if (profesor != NULL)
-		s << "Profesor: " << getProfesor()->toString() << endl;
-	else
-		s << "Profesor por anunciar" << endl;
+		s << getProfesor()->toString() << endl;
+
 	if (horario != NULL)
-		s << "Horario: " << getHorario()->toString() << endl;
-	else
-		s << "Horario aun no definido" << endl;
+		s << getHorario()->toString() << endl;
+
+	if (curso != NULL)
+		s << getCurso()->toString() << endl;
+	
 	return s.str();
 }

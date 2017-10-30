@@ -36,10 +36,9 @@ void ContenedorLGrupo::IngresaGrupo(Grupo* gru) {
 
 }
 
-void ContenedorLGrupo::IngresaGrupo(string nrc, int cupo, string aula, Profesor* pro) {
-	Horario* horari = new Horario;
+void ContenedorLGrupo::IngresaGrupoConDatos(string nrc, int cupo, string aula, Profesor* pro,Horario* horario,Curso* curso) {
 	if (ppioGrupo == NULL) {
-		Grupo* gru = new Grupo(nrc, cupo, aula, pro, horari);
+		Grupo* gru = new Grupo(nrc, cupo, aula, pro, horario,curso);
 		ppioGrupo = new NodoGrupo(gru, ppioGrupo);
 	}
 
@@ -50,7 +49,7 @@ void ContenedorLGrupo::IngresaGrupo(string nrc, int cupo, string aula, Profesor*
 			aux = pex;
 			pex = pex->getSiguienteGrupo();
 		}
-		Grupo* gru = new Grupo(nrc, cupo, aula, pro, horari);
+		Grupo* gru = new Grupo(nrc, cupo, aula, pro, horario,curso);
 		NodoGrupo* nuevo = new NodoGrupo(gru, NULL);
 		aux->setSiguienteGrupo(nuevo);
 	}
@@ -68,32 +67,50 @@ string ContenedorLGrupo::toString() {
 	return p.str();
 }
 
-void ContenedorLGrupo::EliminaGrupo(Grupo* pro) {
+string ContenedorLGrupo::muestraGrupoConNRC(string nrc) {
+	stringstream s;
 	NodoGrupo* pex = ppioGrupo;
 	while (pex != NULL) {
-		if (pex->getGrupo() == pro) {
-			NodoGrupo* borrador = pex->getSiguienteGrupo();
-			pex->setSiguienteGrupo(borrador->getSiguienteGrupo());
-			delete borrador;
-		}
-		else
+		if (pex->getGrupo()->getNRC() != nrc) {
 			pex = pex->getSiguienteGrupo();
+		}
+		else {
+			s << pex->getGrupo()->toString();
+		}
 	}
-
+	s << "El estudiante no esta registrado" << endl;
+	return s.str();
 }
 
-void ContenedorLGrupo::EliminaGrupo(string nrc) { //modificar los eliminadores 
+void ContenedorLGrupo::eliminaGrupoConNRC(string nrc) {
+	//Preguntar si ppioGrupo esta viendo algo diferente de NULL
+	if (ppioGrupo != NULL) {
+		NodoGrupo* aux_borrar = ppioGrupo;
+		NodoGrupo* anterior = NULL;
 
-	NodoGrupo* pex = ppioGrupo;
-	while (pex != NULL) {
-		if (pex->getGrupo()->getNRC() == nrc) {
-			NodoGrupo* borrador = pex->getSiguienteGrupo();
-			pex->setSiguienteGrupo(borrador->getSiguienteGrupo());
-			borrador->~NodoGrupo();
+		//Ahora se necesita recorrer la lista...
+		while ((aux_borrar != NULL) && (aux_borrar->getGrupo()->getNRC() != nrc)) {
+			anterior = aux_borrar;
+			aux_borrar = aux_borrar->getSiguienteGrupo();
 		}
-		else
-			pex = pex->getSiguienteGrupo();
+
+		//Caso I: No se encontró un estudiante con dicha cédula...
+		if (aux_borrar == NULL)
+			cout << "Curso no encontrado" << endl;
+
+		//Caso II: El primer estudiante de la lista tiene dicha cédula...
+		else if (anterior == NULL) {
+			ppioGrupo = ppioGrupo->getSiguienteGrupo();
+			delete aux_borrar;
+		}
+
+		//Caso III: El estudiante se encuentra en alguna otra posicion de la lista...
+		else {
+			anterior->setSiguienteGrupo(aux_borrar->getSiguienteGrupo());
+			delete aux_borrar;
+		}
 	}
+
 }
 
 void ContenedorLGrupo::saveAll(ofstream& file) {
@@ -120,7 +137,7 @@ void ContenedorLGrupo::readAll(ifstream& file) {
 
 	gr.read(file);			// Lectura previa... importante
 	while (!file.eof()) {
-		ptrGrupo = new Grupo(gr.getNRC(), gr.getCupo(), gr.getAula(), gr.getProfesor(), gr.getHorario());
+		ptrGrupo = new Grupo(gr.getNRC(), gr.getCupo(), gr.getAula(), gr.getProfesor(), gr.getHorario(),gr.getCurso());
 		IngresaGrupo(ptrGrupo);
 		gr.read(file);
 	}

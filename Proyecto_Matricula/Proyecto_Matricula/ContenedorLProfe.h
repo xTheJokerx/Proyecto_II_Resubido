@@ -11,14 +11,10 @@ public:
 	void setPpioProfe(NodoProfe*);
 
 	void IngresaProfesor(Profesor*);
-	//void MuestraProfesores();
-	void EliminaProfesor(Profesor*);
-	void IngresaNUEVOProfe(string no, string ce, string te);
-	void EliminaProfePorCedula(string cedu);
-	string muestraUnProfePorCedula(string ce);
-
+	void IngresaProfesorConDatos(string no, string ce, string te);
 	string toString();
-
+	string muestraUnProfePorCedula(string ce);
+	void EliminaProfePorCedula(string cedu);
 
 	void saveAll(ofstream&);
 	void readAll(ifstream&);

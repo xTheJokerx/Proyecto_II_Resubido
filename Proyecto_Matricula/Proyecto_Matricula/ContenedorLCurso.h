@@ -11,12 +11,9 @@ public:
 	NodoCurso* getPpioCurso();
 	void setPpioCurso(NodoCurso*);
 
-
 	void IngresaCurso(Curso*);
+	void IngresaCursoConDatos(string, string);
 	string toString();
-	void EliminaCurso(Curso*);
-
-	void IngresaNUEVOCurso(string, string);
 	string muestraUnCursoPorCodigo(string);
 	void EliminaCursoPorCodigo(string);
 

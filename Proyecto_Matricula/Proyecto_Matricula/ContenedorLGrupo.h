@@ -11,12 +11,11 @@ public:
 	NodoGrupo* getPpioGrupo();
 	void setPpioGrupo(NodoGrupo*);
 
-
 	void IngresaGrupo(Grupo*);
+	void IngresaGrupoConDatos(string, int, string, Profesor*,Horario*,Curso*);
 	string toString();
-	void EliminaGrupo(Grupo*);
-	void IngresaGrupo(string, int, string, Profesor*);
-	void EliminaGrupo(string nrc);
+	string muestraGrupoConNRC(string);
+	void eliminaGrupoConNRC(string);
 
 	void saveAll(ofstream&);
 	void readAll(ifstream&);

@@ -7,8 +7,9 @@ int main() {
 	control->Control1();
 	delete control;*/
 	
-	int opcion;
-	string no, ce, te;
+	int opcion, cupo;
+	string nombre, cedula, telefono,nombreCurso,codigo,NRC,aula;
+
 
 	Instituto* instituto = new Instituto;
 
@@ -39,26 +40,24 @@ int main() {
 			switch (opcion) {
 			case 1:
 				cout << "Nombre: " << endl;
-				cin >> no;
+				cin >> nombre;
 				cout << "Cedula :" << endl;
-				cin >> ce;
+				cin >> cedula;
 				cout << "Telefono: " << endl;
-				cin >> te;
-				instituto->getContEstudiantes()->IngresaEstudianteConDatos(no, ce, te);
+				cin >> telefono;
+				instituto->getContEstudiantes()->IngresaEstudianteConDatos(nombre, cedula, telefono);
 				system("pause");
 				break;
 			case 2:
 				cout << "Ingrese el numero de cedula del estudiante: " << endl;
-				cin >> ce;
-				cout << instituto->getContEstudiantes()->muestraUnEstudiantePorCedula(ce);
-				cout << "Accion completada con exito" << endl;
+				cin >> cedula;
+				cout << instituto->getContEstudiantes()->muestraUnEstudiantePorCedula(cedula);
 				system("pause");
 				break;
 			case 3:
 				cout << "Ingrese el numero de cedula del estudiante" << endl;
-				cin >> ce;
-				instituto->getContEstudiantes()->EliminaEstudiantePorCedula(ce);
-				cout << "Accion completada con exito" << endl;
+				cin >> cedula;
+				instituto->getContEstudiantes()->EliminaEstudiantePorCedula(cedula);
 				system("pause");
 				break;
 			case 4:
@@ -84,26 +83,24 @@ int main() {
 			switch (opcion) {
 			case 1:
 				cout << "Nombre: " << endl;
-				cin >> no;
+				cin >> nombre;
 				cout << "Cedula :" << endl;
-				cin >> ce;
+				cin >> cedula;
 				cout << "Telefono: " << endl;
-				cin >> te;
-				instituto->getContProfes()->IngresaNUEVOProfe(no, ce, te);
+				cin >> telefono;
+				instituto->getContProfes()->IngresaProfesorConDatos(nombre, cedula, telefono);
 				system("pause");
 				break;
 			case 2:
-				cout << "Ingrese el numero de cedula del estudiante: " << endl;
-				cin >> ce;
-				cout << instituto->getContProfes()->muestraUnProfePorCedula(ce);
-				cout << "Accion completada con exito" << endl;
+				cout << "Ingrese el numero de cedula del profesor: " << endl;
+				cin >> cedula;
+				cout << instituto->getContProfes()->muestraUnProfePorCedula(cedula);
 				system("pause");
 				break;
 			case 3:
-				cout << "Ingrese el numero de cedula del estudiante" << endl;
-				cin >> ce;
-				instituto->getContProfes()->EliminaProfePorCedula(ce);
-				cout << "Accion completada con exito" << endl;
+				cout << "Ingrese el numero de cedula del profesor" << endl;
+				cin >> cedula;
+				instituto->getContProfes()->EliminaProfePorCedula(cedula);
 				system("pause");
 				break;
 			case 4:
@@ -111,7 +108,7 @@ int main() {
 				system("pause");
 				break;
 			default:
-				cout << "Por favor, digite un numero del 1 al 3." << endl;
+				cout << "Por favor, digite un numero del 1 al 4." << endl;
 				system("pause");
 				break;
 			}
@@ -123,23 +120,36 @@ int main() {
 			cout << "1) Ingresar un curso. " << endl;
 			cout << "2) Mostrar un curso.  " << endl;
 			cout << "3) Eliminar un curso.  " << endl;
+			cout << "4) Mostrar a todos los cursos. " << endl;
 			cout << "Digite el numero de la opcion que necesita: ";
 			cin >> opcion;
 			switch (opcion) {
 			case 1:
-				cout << "Ha ingresado la opcion de ingresar curso." << endl;
+				cout << "Nombre del curso: " << endl;
+				cin >> nombreCurso;
+				cout << "Codigo del curso :" << endl;
+				cin >> codigo;
+				instituto->getContCursos()->IngresaCursoConDatos(nombreCurso, codigo);
 				system("pause");
 				break;
 			case 2:
-				cout << "Ha ingresado la opcion de mostrar curso." << endl;
+				cout << "Ingrese el codigo del curso: " << endl;
+				cin >> codigo;
+				cout << instituto->getContCursos()->muestraUnCursoPorCodigo(codigo);
 				system("pause");
 				break;
 			case 3:
-				cout << "Ha ingresado la opcion de eliminar curso." << endl;
+				cout << "Ingrese el numero de cedula del profesor" << endl;
+				cin >> codigo;
+				instituto->getContCursos()->EliminaCursoPorCodigo(codigo);
+				system("pause");
+				break;
+			case 4:
+				cout << instituto->getContCursos()->toString() << endl;
 				system("pause");
 				break;
 			default:
-				cout << "Por favor, digite un numero del 1 al 3." << endl;
+				cout << "Por favor, digite un numero del 1 al 4." << endl;
 				system("pause");
 				break;
 			}
@@ -151,6 +161,7 @@ int main() {
 			cout << "1) Ingresar un grupo. " << endl;
 			cout << "2) Mostrar un grupo.  " << endl;
 			cout << "3) Eliminar un grupo.  " << endl;
+			cout << "4) Mostrar a todos los grupos. " << endl;
 			cout << "Digite el numero de la opcion que necesita: ";
 			cin >> opcion;
 			switch (opcion) {
@@ -166,6 +177,9 @@ int main() {
 				cout << "Ha ingresado la opcion de eliminar grupo." << endl;
 				system("pause");
 				break;
+			case 4:
+				cout << instituto->getContCursos()->toString() << endl;
+				system("pause");
 			default:
 				cout << "Por favor, digite un numero del 1 al 3." << endl;
 				system("pause");

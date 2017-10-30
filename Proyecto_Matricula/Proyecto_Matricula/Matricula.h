@@ -1,26 +1,29 @@
 #pragma once
 #include"Estudiante.h"
-#include"Fecha.h"
-#include"Tiempo.h"
+#include "Horario.h"
+#include "Grupo.h"
 
 class Matricula {
 private:
-	Fecha* fecha;
-	Tiempo* hora;
-	Estudiante* estu;
+	Estudiante* estudiante;
+	Horario* horario;
+	Grupo* grupo;
+
 public:
 	Matricula();
-	Matricula(Estudiante*);
+	Matricula(Estudiante*,Horario*,Grupo*);
 	~Matricula();
 
-	Fecha* getFecha();
-	Tiempo* getTiempo();
 	Estudiante* getEstudiante();
-
-	void setFecha(Fecha*);
-	void setTiempo(Tiempo*);
+	Horario* getHorario();
+	Grupo* getGrupo();
 	void setEstudiante(Estudiante*);
+	void setHorario(Horario*);
+	void setGrupo(Grupo*);
 
 	string toString();
+
+	void save(ofstream&);
+	void read(ifstream&);
 
 };
